@@ -17,8 +17,8 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>org.cyk.system.root.business</groupId>
-			<artifactId>root-business-api</artifactId>
+			<groupId>org.cyk.system.company.business</groupId>
+			<artifactId>company-business-api</artifactId>
 			<version>0.0.1</version>
 		</dependency>
 		<dependency>
