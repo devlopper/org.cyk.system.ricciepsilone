@@ -24,7 +24,7 @@ import org.cyk.utility.common.annotation.user.interfaces.InputOneCombo;
 import org.cyk.utility.common.generator.RandomDataProvider;
 
 @Getter @Setter @Named @ViewScoped //TOFIX to be moved on GUI projects
-public class SampleDataPage extends AbstractPrimefacesPage implements Serializable {
+public class RicciEpsiloneSampleDataPage extends AbstractPrimefacesPage implements Serializable {
 
 	private static final long serialVersionUID = 3459311493291130244L;
 

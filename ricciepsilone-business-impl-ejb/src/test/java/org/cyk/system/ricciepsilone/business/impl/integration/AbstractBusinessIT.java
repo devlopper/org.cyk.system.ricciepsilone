@@ -3,6 +3,8 @@ package org.cyk.system.ricciepsilone.business.impl.integration;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
+import org.cyk.system.company.business.impl.CompanyBusinessLayer;
+import org.cyk.system.ricciepsilone.business.impl.RicciEpsiloneBusinessLayer;
 import org.cyk.system.root.business.api.GenericBusiness;
 import org.cyk.system.root.business.api.party.ApplicationBusiness;
 import org.cyk.system.root.business.impl.BusinessIntegrationTestHelper;
@@ -14,8 +16,8 @@ import org.cyk.system.root.business.impl.validation.ExceptionUtils;
 import org.cyk.system.root.business.impl.validation.ValidatorMap;
 import org.cyk.system.root.model.AbstractIdentifiable;
 import org.cyk.system.root.persistence.impl.GenericDaoImpl;
-import org.cyk.utility.test.AbstractIntegrationTestJpaBased;
 import org.cyk.utility.test.ArchiveBuilder;
+import org.cyk.utility.test.integration.AbstractIntegrationTestJpaBased;
 import org.jboss.shrinkwrap.api.Archive;
 
 public abstract class AbstractBusinessIT extends AbstractIntegrationTestJpaBased {
@@ -31,6 +33,10 @@ public abstract class AbstractBusinessIT extends AbstractIntegrationTestJpaBased
 	
 	@Inject protected ValidatorMap validatorMap;// = ValidatorMap.getInstance();
     
+	@Inject protected RootBusinessLayer rootBusinessLayer;
+	@Inject protected CompanyBusinessLayer companyBusinessLayer;
+	@Inject protected RicciEpsiloneBusinessLayer ricciEpsiloneBusinessLayer;
+	
     @Override
     public EntityManager getEntityManager() {
         return g.getEntityManager();
@@ -85,6 +91,7 @@ public abstract class AbstractBusinessIT extends AbstractIntegrationTestJpaBased
                 new ArchiveBuilder().create().getArchive().
                     addClasses(BusinessIntegrationTestHelper.classes()).
                     addPackages(Boolean.FALSE, BusinessIntegrationTestHelper.packages()).
+                    addPackages(Boolean.TRUE,"org.cyk.system.company").
                     addPackages(Boolean.TRUE,"org.cyk.system.ricciepsilone") 
                 ;
     } 
@@ -97,7 +104,11 @@ public abstract class AbstractBusinessIT extends AbstractIntegrationTestJpaBased
     @Override protected void read() {}
     @Override protected void update() {}
     
-    protected void fakeInstallation(){
-    	applicationBusiness.install(RootBusinessLayer.fakeInstallation());
+    protected void installApplication(Boolean faked){
+    	ricciEpsiloneBusinessLayer.installApplication(faked);
+    }
+    
+    protected void installApplication(){
+    	installApplication(Boolean.TRUE);
     }
 }

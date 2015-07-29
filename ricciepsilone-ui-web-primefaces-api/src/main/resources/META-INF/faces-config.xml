@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
+
+	<!-- Do use PrettyFaces ONLY for navigation -->
+
+	<navigation-rule>
+		<from-view-id>*</from-view-id>
+		<!-- Sale Stock Input Finaliser -->
+		<navigation-case>
+			<from-outcome>cloturesalestockinput</from-outcome>
+			<to-view-id>/private/__role__/__ricciepsilonefinaliser__/cloturesalestockinput.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<!-- Sale Stock Input Receiver -->
+		<navigation-case>
+			<from-outcome>registersalestockinput</from-outcome>
+			<to-view-id>/private/__role__/__ricciepsilonereveiver__/registersalestockinput.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>listregisteredsalestockinput</from-outcome>
+			<to-view-id>/private/__role__/__ricciepsilonereveiver__/listregisteredsalestockinput.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>listcloturedsalestockinput</from-outcome>
+			<to-view-id>/private/__role__/__ricciepsilonereveiver__/listcloturedsalestockinput.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+		<navigation-case>
+			<from-outcome>consultsalestockinput</from-outcome>
+			<to-view-id>/private/__role__/__ricciepsilonereveiver__/consultsalestockinput.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		
+	</navigation-rule>
+
+</faces-config>

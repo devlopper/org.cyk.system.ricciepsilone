@@ -1,0 +1,15 @@
+Reports :
+	1 - Liste des clients qui doivent
+	2 - Liste des clients avec la somme des montants des depots, somme des reglements , la balance
+	3 - Liste des clients avec le nombre de depots , nombre de retrait  AVEC acces au details par client
+	4 - Liste des colis qui sont en stock (pas totalement retire) (num colis, qte mrach rest, infos client)
+	
+NB : utiliser le terme coli a la place de marchandise 
+
+Acteur :
+
+	1 - Manager
+	2 - SuperCaissier (2eme etape depot)
+	3 - Caissier (1ere etape depot)
+	
+Apres l'enregistrement du client aller au depot

@@ -3,14 +3,14 @@ package org.cyk.system.ricciepsilone.persistence.impl.integration;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 
-import lombok.Getter;
-
 import org.cyk.system.root.model.AbstractIdentifiable;
 import org.cyk.system.root.persistence.api.GenericDao;
 import org.cyk.system.root.persistence.impl.AbstractPersistenceService;
-import org.cyk.utility.test.AbstractIntegrationTestJpaBased;
 import org.cyk.utility.test.TestMethod;
+import org.cyk.utility.test.integration.AbstractIntegrationTestJpaBased;
 import org.jboss.shrinkwrap.api.Archive;
+
+import lombok.Getter;
 
 /**
  * Persistence integration test (IT)
