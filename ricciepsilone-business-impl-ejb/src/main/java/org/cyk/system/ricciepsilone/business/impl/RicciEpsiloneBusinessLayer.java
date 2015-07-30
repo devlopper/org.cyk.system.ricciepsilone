@@ -110,6 +110,7 @@ public class RicciEpsiloneBusinessLayer extends AbstractBusinessLayer implements
 			public void handleAccountingPeriodToInstall(AccountingPeriod accountingPeriod) {
 				accountingPeriod.setValueAddedTaxIncludedInCost(Boolean.TRUE);
 				accountingPeriod.setValueAddedTaxRate(new BigDecimal("0.18"));
+				accountingPeriod.getStockConfiguration().setZeroQuantityAllowed(Boolean.TRUE);
 			}
 		});
 	}

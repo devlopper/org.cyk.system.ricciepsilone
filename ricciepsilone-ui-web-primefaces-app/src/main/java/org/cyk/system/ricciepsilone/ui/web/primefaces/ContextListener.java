@@ -5,6 +5,7 @@ import java.io.Serializable;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
 
+import org.cyk.system.company.business.impl.product.SaleStockReportTableRow;
 import org.cyk.system.root.ui.web.primefaces.api.RootWebManager;
 import org.cyk.ui.web.primefaces.AbstractContextListener;
 import org.cyk.ui.web.primefaces.page.application.ApplicationInstallationFormModel;
@@ -26,6 +27,7 @@ public class ContextListener extends AbstractContextListener implements Serializ
 				
 			}
 		});
+		SaleStockReportTableRow.FIELD_IDENTIFIER_VISIBLE = Boolean.FALSE;
 	}
 	
 	@Override

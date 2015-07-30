@@ -9,11 +9,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
-import lombok.Getter;
-import lombok.Setter;
-
 import org.cyk.system.company.business.api.product.SaleBusiness;
-import org.cyk.system.company.ui.web.primefaces.model.SaleStockInputFormModel;
 import org.cyk.system.company.ui.web.primefaces.page.product.AbstractSaleStockInputCrudOnePage;
 import org.cyk.system.root.business.api.Crud;
 import org.cyk.ui.api.UIManager;
@@ -24,6 +20,9 @@ import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormLabel;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
+
+import lombok.Getter;
+import lombok.Setter;
 
 @Named @ViewScoped @Getter @Setter
 public class ClotureSaleStockInputPage extends AbstractSaleStockInputCrudOnePage implements Serializable {
