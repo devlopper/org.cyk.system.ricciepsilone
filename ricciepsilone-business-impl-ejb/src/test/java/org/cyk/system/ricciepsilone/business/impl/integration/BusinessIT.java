@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.cyk.system.company.business.api.product.AbstractSaleStockBusiness;
 import org.cyk.system.company.business.api.product.CustomerBusiness;
-import org.cyk.system.company.business.impl.CompanyBusinessLayer;
+import org.cyk.system.company.business.impl.CompanyReportRepository;
 import org.cyk.system.company.business.impl.product.SaleStockReportTableRow;
 import org.cyk.system.company.model.product.AbstractSaleStockSearchCriteria;
 import org.cyk.system.company.model.product.Customer;
@@ -183,7 +183,7 @@ public class BusinessIT extends AbstractBusinessIT {
     	ReportBasedOnDynamicBuilderParameters<SaleStockReportTableRow> saleStockOutputCashRegisterParameters = new ReportBasedOnDynamicBuilderParameters<>();
         saleStockOutputCashRegisterParameters.setIdentifiableClass(SaleStock.class);
         saleStockOutputCashRegisterParameters.setModelClass(SaleStockReportTableRow.class);
-        saleStockOutputCashRegisterParameters.addParameter(CompanyBusinessLayer.getInstance().getParameterSaleStockReportType(), CompanyBusinessLayer.getInstance().getParameterSaleStockReportCashRegister());
+        saleStockOutputCashRegisterParameters.addParameter(CompanyReportRepository.getInstance().getParameterSaleStockReportType(), CompanyReportRepository.getInstance().getParameterSaleStockReportCashRegister());
         rootTestHelper.addReportParameterFromDate(saleStockOutputCashRegisterParameters, DateUtils.addDays(new Date(), -1000));
         rootTestHelper.addReportParameterToDate(saleStockOutputCashRegisterParameters, DateUtils.addDays(new Date(), 1000));
         rootTestHelper.reportBasedOnDynamicBuilderParameters(saleStockOutputCashRegisterParameters);
@@ -191,7 +191,7 @@ public class BusinessIT extends AbstractBusinessIT {
         ReportBasedOnDynamicBuilderParameters<SaleStockReportTableRow> saleStockOutputInventoryParameters = new ReportBasedOnDynamicBuilderParameters<>();
         saleStockOutputInventoryParameters.setIdentifiableClass(SaleStock.class);
         saleStockOutputInventoryParameters.setModelClass(SaleStockReportTableRow.class);
-        saleStockOutputInventoryParameters.addParameter(CompanyBusinessLayer.getInstance().getParameterSaleStockReportType(), CompanyBusinessLayer.getInstance().getParameterSaleStockReportInventory());
+        saleStockOutputInventoryParameters.addParameter(CompanyReportRepository.getInstance().getParameterSaleStockReportType(), CompanyReportRepository.getInstance().getParameterSaleStockReportInventory());
         rootTestHelper.addReportParameterFromDate(saleStockOutputInventoryParameters, DateUtils.addDays(new Date(), -1000));
         rootTestHelper.addReportParameterToDate(saleStockOutputInventoryParameters, DateUtils.addDays(new Date(), 1000));
         rootTestHelper.reportBasedOnDynamicBuilderParameters(saleStockOutputInventoryParameters);
@@ -199,8 +199,8 @@ public class BusinessIT extends AbstractBusinessIT {
         ReportBasedOnDynamicBuilderParameters<SaleStockReportTableRow> saleStockOutputCustomerParameters = new ReportBasedOnDynamicBuilderParameters<>();
         saleStockOutputCustomerParameters.setIdentifiableClass(SaleStock.class);
         saleStockOutputCustomerParameters.setModelClass(SaleStockReportTableRow.class);
-        saleStockOutputCustomerParameters.addParameter(CompanyBusinessLayer.getInstance().getParameterSaleStockReportType(), 
-        		CompanyBusinessLayer.getInstance().getParameterSaleStockReportCustomer());
+        saleStockOutputCustomerParameters.addParameter(CompanyReportRepository.getInstance().getParameterSaleStockReportType(), 
+        		CompanyReportRepository.getInstance().getParameterSaleStockReportCustomer());
         rootTestHelper.addReportParameterFromDate(saleStockOutputCustomerParameters, DateUtils.addDays(new Date(), -1000));
         rootTestHelper.addReportParameterToDate(saleStockOutputCustomerParameters, DateUtils.addDays(new Date(), 1000));
         rootTestHelper.reportBasedOnDynamicBuilderParameters(saleStockOutputCustomerParameters);

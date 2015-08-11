@@ -7,16 +7,18 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import org.apache.commons.lang3.StringUtils;
-import org.cyk.system.company.business.api.CompanyBusinessLayerAdapter;
 import org.cyk.system.company.business.api.product.CustomerBusiness;
 import org.cyk.system.company.business.impl.CompanyBusinessLayer;
+import org.cyk.system.company.business.impl.CompanyBusinessLayerAdapter;
 import org.cyk.system.company.model.accounting.AccountingPeriod;
 import org.cyk.system.company.model.product.Customer;
 import org.cyk.system.root.business.api.RootBusinessLayerAdapter;
 import org.cyk.system.root.business.api.party.person.AbstractActorBusiness;
 import org.cyk.system.root.business.impl.AbstractBusinessLayer;
 import org.cyk.system.root.business.impl.RootBusinessLayer;
+import org.cyk.system.root.business.impl.file.report.AbstractReportRepository;
 import org.cyk.system.root.model.party.person.AbstractActor;
+import org.cyk.system.root.model.security.Installation;
 import org.cyk.system.root.model.security.Role;
 import org.cyk.utility.common.annotation.Deployment;
 import org.cyk.utility.common.annotation.Deployment.InitialisationType;
@@ -40,6 +42,8 @@ public class RicciEpsiloneBusinessLayer extends AbstractBusinessLayer implements
 	@Inject private RootBusinessLayer rootBusinessLayer;
 	@Inject private CompanyBusinessLayer companyBusinessLayer;
 	@Inject private CustomerBusiness customerBusiness;
+	
+	@Inject private RicciEpsiloneReportRepository reportRepository;
 	
 	@Override
 	protected void initialisation() {
@@ -93,7 +97,7 @@ public class RicciEpsiloneBusinessLayer extends AbstractBusinessLayer implements
 
 			@Override
 			public String getCompanyName() {
-				return "RicciEpsilone";
+				return "SITM";
 			}
 			
 			@Override
@@ -113,6 +117,18 @@ public class RicciEpsiloneBusinessLayer extends AbstractBusinessLayer implements
 				accountingPeriod.getStockConfiguration().setZeroQuantityAllowed(Boolean.TRUE);
 			}
 		});
+	}
+	
+	@Override
+	protected AbstractReportRepository getReportRepository() {
+		return reportRepository;
+	}
+	
+	@Override
+	public Installation buildInstallation() {
+		Installation installation = super.buildInstallation();
+		installation.getApplication().setName("SITM");
+		return installation;
 	}
 	
 	@Override

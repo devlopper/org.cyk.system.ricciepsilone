@@ -50,7 +50,13 @@ public class RicciEpsiloneWebManager extends AbstractPrimefacesManager implement
 			}
 		});
 		
-		languageBusiness.registerResourceBundle("org.cyk.system."+identifier+".ui.web.primefaces.api.resources.i18n",getClass().getClassLoader());
+		//languageBusiness.registerResourceBundle("org.cyk.system."+identifier+".ui.web.primefaces.api.resources.i18n",getClass().getClassLoader());
+		//logoFileInfos.setExtension("gif");
+	}
+	
+	@Override
+	protected void afterInitialisation() {
+		super.afterInitialisation();
 	}
 		
 	public static RicciEpsiloneWebManager getInstance() {

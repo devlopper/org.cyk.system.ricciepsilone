@@ -52,6 +52,8 @@ public class RegisteredSaleStockInputListPage extends AbstractSaleStockInputList
 		
 		((Commandable)table.getAddRowCommandable()).getButton().setValue(text("ui.registersalestockinput.command.label"));
 		table.getAddRowCommandable().setViewId("registersalestockinput");
+		table.getPrintCommandable().setRendered(Boolean.FALSE);
+		((Commandable)table.getPrintCommandable()).getButton().setRendered(Boolean.FALSE);
 	}
 	
 	@Override
