@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.cyk.system.company.business.api.product.SaleBusiness;
+import org.cyk.system.company.business.api.product.SaleStockInputBusiness;
 import org.cyk.system.company.ui.web.primefaces.page.product.AbstractSaleStockInputCrudOnePage;
 import org.cyk.system.root.business.api.Crud;
 import org.cyk.ui.api.UIManager;
@@ -30,6 +31,7 @@ public class ClotureSaleStockInputPage extends AbstractSaleStockInputCrudOnePage
 	private static final long serialVersionUID = 9040359120893077422L;
 
 	@Inject private SaleBusiness saleBusiness;
+	@Inject private SaleStockInputBusiness saleStockInputBusiness;
 	
 	@Override
 	protected void initialisation() {
@@ -70,7 +72,7 @@ public class ClotureSaleStockInputPage extends AbstractSaleStockInputCrudOnePage
 	
 	@Override
 	protected void update() {
-		saleBusiness.complete(identifiable.getSale(),cashRegisterController.getSaleCashRegisterMovement());
+		saleStockInputBusiness.complete(identifiable,cashRegisterController.getSaleCashRegisterMovement());
 	}
 	
 	@Override

@@ -11,6 +11,7 @@ import org.cyk.system.company.business.api.product.AbstractSaleStockBusiness;
 import org.cyk.system.company.business.api.product.CustomerBusiness;
 import org.cyk.system.company.business.impl.CompanyReportRepository;
 import org.cyk.system.company.business.impl.product.SaleStockReportTableRow;
+import org.cyk.system.company.model.payment.CashRegister;
 import org.cyk.system.company.model.product.AbstractSaleStockSearchCriteria;
 import org.cyk.system.company.model.product.Customer;
 import org.cyk.system.company.model.product.SaleStock;
@@ -30,22 +31,27 @@ public class BusinessIT extends AbstractBusinessIT {
 
     private static final long serialVersionUID = -6691092648665798471L;
 
+    private static final Boolean PRINT_REPORT = Boolean.FALSE;
+    
     @Deployment
     public static Archive<?> createDeployment() {
     	return createRootDeployment();
     } 
     
     @Inject private CustomerBusiness customerBusiness;
-    private Customer customer1;
+    private CashRegister cashRegister1;
+    private Customer customer1,customer2,customer3;
+    private Person person;
     
     @Override
     protected void businesses() {
     	installApplication();
     	registerCustomers();
-    	
+    	companyBusinessTestHelper.setSaleAutoCompleted(Boolean.FALSE);
     	Person person = companyBusinessTestHelper.cashierPerson();
     	
     	dropAndTakeInOne(person);
+    	/*
     	dropAndTakeInMany(person);
     	dropAndTakeInManyWithZeroPayment(person);
     	dropAndTakeInManyWithZeroQuantity(person);
@@ -54,6 +60,7 @@ public class BusinessIT extends AbstractBusinessIT {
     	searchByCriterias();
     	
     	printReports();
+    	*/
     }
     
     private void registerCustomers(){
@@ -75,7 +82,7 @@ public class BusinessIT extends AbstractBusinessIT {
     
     private void dropAndTakeInOne(Person person){
     	SaleStockInput saleStockInput = companyBusinessTestHelper
-        		.drop(date(2015, 1, 1),person, customer1,"A", "1000", "100", "3", "1100", "168", "1100","1100");
+        		.drop(date(2015, 1, 1),person, customer1,"A", "1000", "100", "3",Boolean.TRUE, "1100", "168", "1100","1100");
     	companyBusinessTestHelper.taking(date(2015, 1, 2),person, saleStockInput, "3", "1100", "0", "0","0");
     }
     
