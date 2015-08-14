@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN" "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+	    
+    <jdbc-connection-pool 
+    	name="cyk_ricciepsilone_pool"
+    	datasource-classname="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" 
+    	res-type="javax.sql.DataSource" >
+      <property name="servername" value="localhost"/>
+      <property name="databasename" value="cyk_ricciepsilone_db"/>
+      <property name="user" value="root"/>
+      <property name="password" value="root"/>
+      <property name="URL" value="jdbc:mysql://localhost:3306/cyk_ricciepsilone_db"/>
+    </jdbc-connection-pool>
+    
+    <jdbc-resource jndi-name="java:app/jdbc/cyk_ricciepsilone_pool" pool-name="cyk_ricciepsilone_pool" />
+        
+</resources>

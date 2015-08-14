@@ -34,7 +34,5 @@
       <property name="mail.smtp.password" value="p@ssw0rd*"></property>
       <property name="mail.smtp.socketFactory.class" value="javax.net.ssl.SSLSocketFactory"></property>
     </mail-resource>
-    	
-
-
+    
 </resources>
