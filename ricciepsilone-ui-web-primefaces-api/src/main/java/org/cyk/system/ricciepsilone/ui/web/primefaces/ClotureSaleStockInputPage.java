@@ -37,7 +37,7 @@ public class ClotureSaleStockInputPage extends AbstractSaleStockInputCrudOnePage
 	protected void initialisation() {
 		super.initialisation();
 		
-		form.setControlSetListener(new ControlSetAdapter<Object>(){
+		form.getControlSetListeners().add(new ControlSetAdapter<Object>(){
 			@Override
 			public void input(ControlSet<Object, DynaFormModel, DynaFormRow, DynaFormLabel, DynaFormControl, SelectItem> controlSet,
 					Input<?, DynaFormModel, DynaFormRow, DynaFormLabel, DynaFormControl, SelectItem> input) {

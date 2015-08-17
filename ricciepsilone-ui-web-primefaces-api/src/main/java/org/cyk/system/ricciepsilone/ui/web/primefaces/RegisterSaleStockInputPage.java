@@ -23,7 +23,7 @@ public class RegisterSaleStockInputPage extends AbstractSaleStockInputCrudOnePag
 	protected void initialisation() {
 		super.initialisation();
 		contentTitle = text("ui.registersalestockinput.page.title");
-		form.setControlSetListener(new ControlSetAdapter<Object>(){
+		form.getControlSetListeners().add(new ControlSetAdapter<Object>(){
 			@Override
 			public Boolean build(Field field) {
 				return !field.getName().equals("commission") && !field.getName().equals("valueAddedTaxable")
