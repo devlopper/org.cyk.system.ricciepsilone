@@ -1,6 +1,7 @@
 package org.cyk.system.ricciepsilone.ui.web.primefaces;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
@@ -8,6 +9,8 @@ import javax.inject.Named;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.cyk.system.company.model.product.SaleStockInput;
+import org.cyk.system.company.model.product.SaleStockInputSearchCriteria;
 import org.cyk.system.company.ui.web.primefaces.page.product.AbstractSaleStockInputListPage;
 import org.cyk.ui.web.primefaces.Commandable;
 
@@ -28,4 +31,8 @@ public class CloturedSaleStockInputListPage extends AbstractSaleStockInputListPa
 		((Commandable)table.getAddRowCommandable()).getButton().setRendered(Boolean.FALSE);
 	}
 	
+	@Override
+	protected void __afterFindByCriteria__(SaleStockInputSearchCriteria criteria,Collection<SaleStockInput> results) {
+		super.__afterFindByCriteria__(criteria, results);
+	}
 }

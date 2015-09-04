@@ -6,21 +6,20 @@ import java.lang.reflect.Field;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import lombok.Getter;
+import lombok.Setter;
+
+import org.cyk.system.company.business.impl.product.SaleStockReportTableRow;
 import org.cyk.system.company.model.product.SaleStockInputSearchCriteria;
 import org.cyk.system.company.ui.web.primefaces.page.product.AbstractSaleStockInputListPage;
 import org.cyk.system.root.model.AbstractIdentifiable;
 import org.cyk.ui.api.command.CommandAdapter;
 import org.cyk.ui.api.command.UICommand;
-import org.cyk.ui.api.model.table.Cell;
-import org.cyk.ui.api.model.table.Column;
+import org.cyk.ui.api.model.table.ColumnAdapter;
 import org.cyk.ui.api.model.table.Row;
 import org.cyk.ui.web.api.WebManager;
 import org.cyk.ui.web.api.WebNavigationManager;
 import org.cyk.ui.web.primefaces.Commandable;
-import org.cyk.utility.common.model.table.TableAdapter;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @Named @ViewScoped @Getter @Setter
 public class RegisteredSaleStockInputListPage extends AbstractSaleStockInputListPage implements Serializable {
@@ -36,17 +35,17 @@ public class RegisteredSaleStockInputListPage extends AbstractSaleStockInputList
 			@SuppressWarnings("unchecked")
 			@Override
 			public void serve(UICommand command, Object parameter) {
-				AbstractIdentifiable identifiable = ((SaleStockQueryResultFormModel)((Row<SaleStockQueryResultFormModel>)parameter).getData()).getIdentifiable();
+				AbstractIdentifiable identifiable = ((Row<SaleStockReportTableRow>)parameter).getData().getSaleStock();
 				WebNavigationManager.getInstance().redirectTo(RicciEpsiloneWebManager.getInstance().getOutcomeConsultSaleStockInput(), 
 						new Object[]{WebManager.getInstance().getRequestParameterIdentifiable(),identifiable.getIdentifier()});
 			}
 		});
 		
-		table.getTableListeners().add(new TableAdapter<Row<Object>, Column, Object, String, Cell, String>(){
+		table.getColumnListeners().add(new ColumnAdapter(){
 			@Override
-			public Boolean ignore(Field field) {
-				return !(field.getName().equals("date") || field.getName().equals("customer") || field.getName().equals("identifier") 
-						||field.getName().equals("saleStockInputExternalIdentifier") || field.getName().equals("numberOfGoods") || field.getName().equals("amount"));
+			public Boolean isColumn(Field field) {
+				return field.getName().equals("date") || field.getName().equals("customer") || field.getName().equals("identifier") 
+						||field.getName().equals("saleStockInputExternalIdentifier") || field.getName().equals("numberOfGoods") || field.getName().equals("amount");
 			}
 		});
 		
@@ -65,7 +64,7 @@ public class RegisteredSaleStockInputListPage extends AbstractSaleStockInputList
 	@Override
 	protected SaleStockInputSearchCriteria searchCriteria() {
 		SaleStockInputSearchCriteria searchCriteria = super.searchCriteria();
-		searchCriteria.setDone(Boolean.FALSE);
+		searchCriteria.getSaleSearchCriteria().setDone(Boolean.FALSE);
 		return searchCriteria;
 	}
 	
