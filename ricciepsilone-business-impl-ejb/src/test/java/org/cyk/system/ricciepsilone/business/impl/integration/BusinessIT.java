@@ -83,6 +83,7 @@ public class BusinessIT extends AbstractBusinessIT {
     private void dropAndTakeInOne(Person person){
     	SaleStockInput saleStockInput = companyBusinessTestHelper
         		.drop(date(2015, 1, 1),person, customer1,"A", "1000", "100", "3",Boolean.TRUE, "1100", "168", "1100","1100");
+    	companyBusinessTestHelper.complete(date(2015, 1, 1),person, saleStockInput, "0",Boolean.TRUE, "1000", "0", "1000","1000");
     	companyBusinessTestHelper.taking(date(2015, 1, 2),person, saleStockInput, "3", "1100", "0", "0","0");
     }
     

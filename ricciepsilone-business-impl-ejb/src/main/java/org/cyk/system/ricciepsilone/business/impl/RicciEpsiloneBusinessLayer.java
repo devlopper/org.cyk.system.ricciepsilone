@@ -107,13 +107,13 @@ public class RicciEpsiloneBusinessLayer extends AbstractBusinessLayer implements
 			
 			@Override
 			public byte[] getCompanyPointOfSaleBytes() {
-				return getResourceAsBytes("report/payment/pos1.jrxml");
+				return getResourceAsBytes("report/payment/pos_a4.jrxml");
 			}
 			
 			@Override
 			public void handleAccountingPeriodToInstall(AccountingPeriod accountingPeriod) {
 				accountingPeriod.setValueAddedTaxIncludedInCost(Boolean.TRUE);
-				accountingPeriod.setValueAddedTaxRate(new BigDecimal("0.18"));
+				accountingPeriod.setValueAddedTaxRate(new BigDecimal("0.1"));
 				accountingPeriod.getStockConfiguration().setZeroQuantityAllowed(Boolean.TRUE);
 			}
 		});
