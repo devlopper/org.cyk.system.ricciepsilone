@@ -56,9 +56,9 @@ public class ClotureSaleStockInputPage extends AbstractSaleStockInputCrudOnePage
 			public String fiedLabel(ControlSet<Object, DynaFormModel, DynaFormRow, DynaFormLabel, DynaFormControl, SelectItem> controlSet,Field field) {
 				String label = UIManager.getInstance().getLanguageBusiness().findFieldLabelText(field);
 				if(field.getName().equals("valueAddedTaxable"))
-					label +=  " - "+numberBusiness.format(accountingPeriod.getValueAddedTaxRate().multiply(new BigDecimal("100")))+"%"; 
+					;//label +=  " - "+numberBusiness.format(accountingPeriod.getValueAddedTaxRate().multiply(new BigDecimal("100")))+"%"; 
 				else if(field.getName().equals("commission"))
-					label +=  "%"; 
+					;//label +=  "%"; 
 				return label;
 			}
 			
