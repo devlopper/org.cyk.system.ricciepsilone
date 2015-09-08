@@ -91,6 +91,8 @@ public class RicciEpsiloneBusinessLayer extends AbstractBusinessLayer implements
 			}
 		});
 		
+		companyBusinessLayer.setSaleReportProducer(new RicciEpsiloneSaleReportProducer());
+		
 		companyBusinessLayer.getCompanyBusinessLayerListeners().add(new CompanyBusinessLayerAdapter() {
 			
 			private static final long serialVersionUID = 5179809445850168706L;
