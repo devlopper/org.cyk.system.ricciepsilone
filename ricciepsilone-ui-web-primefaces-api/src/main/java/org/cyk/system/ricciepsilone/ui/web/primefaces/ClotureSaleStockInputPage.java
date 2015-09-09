@@ -2,12 +2,14 @@ package org.cyk.system.ricciepsilone.ui.web.primefaces;
 
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
 
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import lombok.Getter;
+import lombok.Setter;
 
 import org.cyk.system.company.business.api.product.SaleBusiness;
 import org.cyk.system.company.business.api.product.SaleStockInputBusiness;
@@ -21,9 +23,6 @@ import org.primefaces.extensions.model.dynaform.DynaFormControl;
 import org.primefaces.extensions.model.dynaform.DynaFormLabel;
 import org.primefaces.extensions.model.dynaform.DynaFormModel;
 import org.primefaces.extensions.model.dynaform.DynaFormRow;
-
-import lombok.Getter;
-import lombok.Setter;
 
 @Named @ViewScoped @Getter @Setter
 public class ClotureSaleStockInputPage extends AbstractSaleStockInputCrudOnePage implements Serializable {
@@ -41,13 +40,14 @@ public class ClotureSaleStockInputPage extends AbstractSaleStockInputCrudOnePage
 			@Override
 			public void input(ControlSet<Object, DynaFormModel, DynaFormRow, DynaFormLabel, DynaFormControl, SelectItem> controlSet,
 					Input<?, DynaFormModel, DynaFormRow, DynaFormLabel, DynaFormControl, SelectItem> input) {
+				
 				//input.setReadOnly(!input.getField().getName().equals("commission") && !input.getField().getName().equals("valueAddedTaxable"));
 				
 				if(input.getField().getName().equals("customer")) input.setReadOnly(Boolean.TRUE);
 				else if(input.getField().getName().equals("externalIdentifier")) input.setReadOnly(Boolean.TRUE);
 				else if(input.getField().getName().equals("quantity")) input.setReadOnly(Boolean.TRUE);
-				//else if(input.getField().getName().equals("price")) input.setDisabled(Boolean.TRUE);
-				else if(input.getField().getName().equals("price")) input.setReadOnly(Boolean.TRUE);
+				else if(input.getField().getName().equals("price")) input.setDisabled(Boolean.TRUE);
+				//else if(input.getField().getName().equals("price")) input.setReadOnly(Boolean.TRUE);
 				else if(input.getField().getName().equals("comments")) input.setReadOnly(Boolean.TRUE);
 				
 			}
@@ -65,6 +65,7 @@ public class ClotureSaleStockInputPage extends AbstractSaleStockInputCrudOnePage
 		});
 		
 		identifiable.getSale().setCompleted(Boolean.TRUE);
+		identifiable.getSale().setAutoComputeValueAddedTax(Boolean.TRUE);
 		((SaleStockInputFormModel)form.getData()).setTotalCost(numberBusiness.format(identifiable.getSale().getCost()));
 		((SaleStockInputFormModel)form.getData()).setValueAddedTax(numberBusiness.format(identifiable.getSale().getValueAddedTax()));
 		((SaleStockInputFormModel)form.getData()).setValueAddedTaxable(Boolean.TRUE);
