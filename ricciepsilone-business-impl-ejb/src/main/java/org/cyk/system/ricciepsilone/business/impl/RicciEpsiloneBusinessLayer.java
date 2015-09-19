@@ -36,7 +36,8 @@ public class RicciEpsiloneBusinessLayer extends AbstractBusinessLayer implements
 	private static final String CUSTOMER_BASE_REGISTRATION_CODE = "41110";
 	private static final Integer CUSTOMER_REGISTRATION_CODE_NAMES_LENGHT = 4;
 	
-	@Getter private final String roleRicciSuperCashierCode = "RICCISUPERCASHIER",roleRicciCashierCode = "RICCICASHIER";
+	@Getter private final String roleInputterCode = "INPUTTER",roleFinaliserCode = "FINALISER",
+			roleCashierCode = "CASHIER";
 	@Getter private Role roleRicciSuperCashier,roleRicciCashier;
 	
 	@Inject private RootBusinessLayer rootBusinessLayer;
@@ -49,10 +50,11 @@ public class RicciEpsiloneBusinessLayer extends AbstractBusinessLayer implements
 	protected void initialisation() {
 		INSTANCE = this; 
 		super.initialisation();
+		/*
 		registerResourceBundle("org.cyk.system.ricciepsilone.model.resources.entity", getClass().getClassLoader());
 		registerResourceBundle("org.cyk.system.ricciepsilone.model.resources.message", getClass().getClassLoader());
 		registerResourceBundle("org.cyk.system.ricciepsilone.business.impl.resources.message", getClass().getClassLoader());
-		
+		*/
 		rootBusinessLayer.getRootBusinessLayerListeners().add(new RootBusinessLayerAdapter(){
 			private static final long serialVersionUID = 3873929111679088940L;
 
@@ -139,8 +141,9 @@ public class RicciEpsiloneBusinessLayer extends AbstractBusinessLayer implements
 	}
 	
 	private void security(){ 
-    	createRole(roleRicciSuperCashierCode, "Ricci Super Cashier");
-    	createRole(roleRicciCashierCode, "Ricci Cashier");
+    	createRole(roleInputterCode, "Opérateur de saisie de dépot colis");
+    	createRole(roleFinaliserCode, "Finaliseur de dépot de colis");
+    	createRole(roleCashierCode, "Caissier");
     }
 	
 	@Override

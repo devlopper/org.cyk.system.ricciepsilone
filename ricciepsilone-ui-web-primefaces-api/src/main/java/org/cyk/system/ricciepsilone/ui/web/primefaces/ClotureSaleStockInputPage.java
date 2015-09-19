@@ -69,6 +69,7 @@ public class ClotureSaleStockInputPage extends AbstractSaleStockInputCrudOnePage
 		((SaleStockInputFormModel)form.getData()).setTotalCost(numberBusiness.format(identifiable.getSale().getCost()));
 		((SaleStockInputFormModel)form.getData()).setValueAddedTax(numberBusiness.format(identifiable.getSale().getValueAddedTax()));
 		((SaleStockInputFormModel)form.getData()).setValueAddedTaxable(Boolean.TRUE);
+		
 	}
 	
 	@Override
