@@ -10,32 +10,31 @@
 		<!-- Sale Stock Input Finaliser -->
 		<navigation-case>
 			<from-outcome>cloturesalestockinput</from-outcome>
-			<to-view-id>/private/__role__/__ricciepsilonefinaliser__/cloturesalestockinput.xhtml</to-view-id>
+			<to-view-id>/private/__role__/__finaliser__/cloturesalestockinput.xhtml</to-view-id>
+			<redirect />
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>listcloturedsalestockinput</from-outcome>
+			<to-view-id>/private/__role__/__finaliser__/listcloturedsalestockinput.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		
 		<!-- Sale Stock Input Receiver -->
 		<navigation-case>
 			<from-outcome>registersalestockinput</from-outcome>
-			<to-view-id>/private/__role__/__ricciepsilonereveiver__/registersalestockinput.xhtml</to-view-id>
+			<to-view-id>/private/__role__/__inputter__/registersalestockinput.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		
 		<navigation-case>
 			<from-outcome>listregisteredsalestockinput</from-outcome>
-			<to-view-id>/private/__role__/__ricciepsilonereveiver__/listregisteredsalestockinput.xhtml</to-view-id>
-			<redirect />
-		</navigation-case>
-		
-		<navigation-case>
-			<from-outcome>listcloturedsalestockinput</from-outcome>
-			<to-view-id>/private/__role__/__ricciepsilonereveiver__/listcloturedsalestockinput.xhtml</to-view-id>
+			<to-view-id>/private/__role__/__inputter__/listregisteredsalestockinput.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		
 		<navigation-case>
 			<from-outcome>consultsalestockinput</from-outcome>
-			<to-view-id>/private/__role__/__ricciepsilonereveiver__/consultsalestockinput.xhtml</to-view-id>
+			<to-view-id>/private/__role__/__inputter__/consultsalestockinput.xhtml</to-view-id>
 			<redirect />
 		</navigation-case>
 		
