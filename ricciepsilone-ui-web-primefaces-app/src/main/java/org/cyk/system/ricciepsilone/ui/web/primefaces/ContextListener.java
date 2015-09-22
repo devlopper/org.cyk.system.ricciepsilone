@@ -6,6 +6,7 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
 
 import org.cyk.system.company.business.impl.product.SaleStockReportTableRow;
+import org.cyk.system.ricciepsilone.business.impl.RicciEpsiloneBusinessLayer;
 import org.cyk.system.root.ui.web.primefaces.api.RootWebManager;
 import org.cyk.ui.web.primefaces.AbstractContextListener;
 import org.cyk.ui.web.primefaces.page.application.ApplicationInstallationFormModel;
@@ -28,6 +29,16 @@ public class ContextListener extends AbstractContextListener implements Serializ
 			}
 		});
 		SaleStockReportTableRow.FIELD_IDENTIFIER_VISIBLE = Boolean.FALSE;
+	}
+	
+	@Override
+	protected void addUrls(ServletContextEvent event) {
+		super.addUrls(event);
+		//uniformResourceLocatorBusiness.setFilteringEnabled(Boolean.TRUE);
+		addUrl(rootBusinessLayer.getUserRole().getCode(),"/private/index.jsf");
+		//addUrl(rootBusinessLayer.getUserRole().getCode(),"/private/__tools__/crud/crudmany.jsf",uiManager.getClassParameter(),uiManager.businessEntityInfos(Actor.class).getIdentifier());
+		
+		//addCrudUrl(RicciEpsiloneBusinessLayer.getInstance().getRoleRicciCashierCode(), aClass, list, cruds);
 	}
 	
 	@Override
