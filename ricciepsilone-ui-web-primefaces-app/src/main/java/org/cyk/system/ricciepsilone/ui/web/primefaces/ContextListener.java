@@ -54,24 +54,27 @@ public class ContextListener extends AbstractContextListener implements Serializ
 		addUrl(roleCode,"/private/__role__/__inputter__/listregisteredsalestockinput.jsf");
 		addUrl(roleCode,"/private/__role__/__inputter__/consultsalestockinput.jsf");
 		addUrl(roleCode,"/private/__role__/__salemanager__/salestockinputconsult.jsf");
-		addUrl(roleCode,"/private/__role__/__salemanager__/salestocklist.jsf",CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
-				CompanyReportRepository.getInstance().getParameterSaleStockReportCustomer());
-		addUrl(roleCode,"/private/__role__/__salemanager__/salestocklist.jsf",CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
-				CompanyReportRepository.getInstance().getParameterSaleStockReportInventory());
 		
 		addReportUrl(roleCode,Sale.class,Boolean.FALSE);
-		addReportUrl(roleCode,SaleStock.class,Boolean.FALSE,CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
+		
+		
+		addTableUrl(roleCode,SaleStock.class,"/private/__role__/__salemanager__/salestocklist.jsf",CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
 				CompanyReportRepository.getInstance().getParameterSaleStockReportCustomer());
-		addReportUrl(roleCode,SaleStock.class,CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
-				CompanyReportRepository.getInstance().getParameterSaleStockReportInput());
-		addReportUrl(roleCode,SaleStock.class,CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
+		
+		//addReportUrl(roleCode,SaleStock.class,CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
+		//		CompanyReportRepository.getInstance().getParameterSaleStockReportInput());
+		
+		addTableUrl(roleCode,SaleStock.class,"/private/__role__/__salemanager__/salestocklist.jsf",CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
 				CompanyReportRepository.getInstance().getParameterSaleStockReportInventory());
 		
 		roleCode = RicciEpsiloneBusinessLayer.getInstance().getRoleCashierCode();
 		addUrl(roleCode,"/private/__role__/__salemanager__/salestockoutputedit.jsf");
-		addReportUrl(roleCode,Sale.class);
-		addReportUrl(roleCode,SaleCashRegisterMovement.class);
+		addReportUrl(roleCode,Sale.class,Boolean.FALSE);
+		addReportUrl(roleCode,SaleCashRegisterMovement.class,Boolean.FALSE);
 		addReportUrl(roleCode,SaleStock.class,CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
+				CompanyReportRepository.getInstance().getParameterSaleStockReportCashRegister());
+		
+		addTableUrl(roleCode,SaleStock.class,"/private/__role__/__salemanager__/salestockoutputlist.jsf",CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
 				CompanyReportRepository.getInstance().getParameterSaleStockReportCashRegister());
 	}
 	
