@@ -6,25 +6,23 @@ import java.util.Collection;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import lombok.Getter;
+
 import org.cyk.system.company.business.api.payment.CashierBusiness;
 import org.cyk.system.company.business.impl.CompanyBusinessLayer;
 import org.cyk.system.company.model.payment.Cashier;
-import org.cyk.system.company.model.product.Customer;
 import org.cyk.system.company.ui.web.primefaces.CompanyWebManager;
 import org.cyk.system.ricciepsilone.business.impl.RicciEpsiloneBusinessLayer;
 import org.cyk.system.root.business.impl.RootBusinessLayer;
 import org.cyk.system.root.model.party.person.Person;
 import org.cyk.ui.api.AbstractUserSession;
 import org.cyk.ui.api.command.UICommandable;
-import org.cyk.ui.api.command.UICommandable.IconType;
 import org.cyk.ui.api.command.menu.SystemMenu;
 import org.cyk.ui.web.api.security.shiro.WebEnvironmentAdapter;
 import org.cyk.ui.web.api.security.shiro.WebEnvironmentAdapter.SecuredUrlProvider;
 import org.cyk.ui.web.primefaces.AbstractPrimefacesManager;
 import org.cyk.utility.common.annotation.Deployment;
 import org.cyk.utility.common.annotation.Deployment.InitialisationType;
-
-import lombok.Getter;
 
 @Singleton @Deployment(initialisationType=InitialisationType.EAGER,order=RicciEpsiloneWebManager.DEPLOYMENT_ORDER) @Getter
 public class RicciEpsiloneWebManager extends AbstractPrimefacesManager implements Serializable {
@@ -85,7 +83,7 @@ public class RicciEpsiloneWebManager extends AbstractPrimefacesManager implement
 	public void saleCommandables(AbstractUserSession userSession,Collection<UICommandable> commandables,Collection<UICommandable> mobileCommandables,Cashier cashier){
 		if(userSession.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleInputterCode())){
 			commandables.add(uiProvider.createCommandable("ui.listregisteredsalestockinput.command.label", null, "listregisteredsalestockinput"));
-			commandables.add(menuManager.crudMany(Customer.class, IconType.PERSON));
+			
 		}
 		
 		if(userSession.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode())){
@@ -104,10 +102,6 @@ public class RicciEpsiloneWebManager extends AbstractPrimefacesManager implement
 			/*if(cashier!=null){
 				commandables.add(uiProvider.createCommandable("ricciepsilone.command.register.salestockinput", null, "registersalestockinput"));
 			}*/
-			
-			
-			
-			
 		}
 	}
 	
