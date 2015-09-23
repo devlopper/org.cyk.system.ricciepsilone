@@ -5,9 +5,12 @@ import java.io.Serializable;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
 
+import org.cyk.system.company.business.impl.CompanyReportRepository;
 import org.cyk.system.company.business.impl.product.SaleStockReportTableRow;
 import org.cyk.system.company.model.product.Customer;
 import org.cyk.system.company.model.product.Sale;
+import org.cyk.system.company.model.product.SaleCashRegisterMovement;
+import org.cyk.system.company.model.product.SaleStock;
 import org.cyk.system.ricciepsilone.business.impl.RicciEpsiloneBusinessLayer;
 import org.cyk.system.root.business.api.Crud;
 import org.cyk.system.root.ui.web.primefaces.api.RootWebManager;
@@ -42,12 +45,34 @@ public class ContextListener extends AbstractContextListener implements Serializ
 		
 		String roleCode = RicciEpsiloneBusinessLayer.getInstance().getRoleInputterCode();
 		addUrl(roleCode,"/private/__role__/__inputter__/");
-		addCrudUrl(RicciEpsiloneBusinessLayer.getInstance().getRoleInputterCode(), Customer.class, Boolean.TRUE, Crud.CREATE,Crud.UPDATE);
+		addCrudUrl(roleCode, Customer.class, Boolean.TRUE, Crud.CREATE,Crud.UPDATE);
 		addUrl(roleCode,"/private/__tools__/crud/consultactor.jsf");
-		addUrl(roleCode,"/private/__tools__/export/report.jsf",uiManager.getClassParameter(),uiManager.businessEntityInfos(Sale.class).getIdentifier());
+		addReportUrl(roleCode,Sale.class);
 		
 		roleCode = RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode();
 		addUrl(roleCode,"/private/__role__/__finaliser__/");
+		addUrl(roleCode,"/private/__role__/__inputter__/listregisteredsalestockinput.jsf");
+		addUrl(roleCode,"/private/__role__/__inputter__/consultsalestockinput.jsf");
+		addUrl(roleCode,"/private/__role__/__salemanager__/salestockinputconsult.jsf");
+		addUrl(roleCode,"/private/__role__/__salemanager__/salestocklist.jsf",CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
+				CompanyReportRepository.getInstance().getParameterSaleStockReportCustomer());
+		addUrl(roleCode,"/private/__role__/__salemanager__/salestocklist.jsf",CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
+				CompanyReportRepository.getInstance().getParameterSaleStockReportInventory());
+		
+		addReportUrl(roleCode,Sale.class,Boolean.FALSE);
+		addReportUrl(roleCode,SaleStock.class,Boolean.FALSE,CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
+				CompanyReportRepository.getInstance().getParameterSaleStockReportCustomer());
+		addReportUrl(roleCode,SaleStock.class,CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
+				CompanyReportRepository.getInstance().getParameterSaleStockReportInput());
+		addReportUrl(roleCode,SaleStock.class,CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
+				CompanyReportRepository.getInstance().getParameterSaleStockReportInventory());
+		
+		roleCode = RicciEpsiloneBusinessLayer.getInstance().getRoleCashierCode();
+		addUrl(roleCode,"/private/__role__/__salemanager__/salestockoutputedit.jsf");
+		addReportUrl(roleCode,Sale.class);
+		addReportUrl(roleCode,SaleCashRegisterMovement.class);
+		addReportUrl(roleCode,SaleStock.class,CompanyReportRepository.getInstance().getParameterSaleStockReportType(),
+				CompanyReportRepository.getInstance().getParameterSaleStockReportCashRegister());
 	}
 	
 	@Override
