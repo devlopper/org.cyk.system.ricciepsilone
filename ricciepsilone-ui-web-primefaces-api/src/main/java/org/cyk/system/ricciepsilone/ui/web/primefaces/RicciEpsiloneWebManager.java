@@ -6,10 +6,7 @@ import java.util.Collection;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
-import lombok.Getter;
-
 import org.cyk.system.company.business.api.payment.CashierBusiness;
-import org.cyk.system.company.business.impl.CompanyBusinessLayer;
 import org.cyk.system.company.business.impl.CompanyReportRepository;
 import org.cyk.system.company.model.payment.Cashier;
 import org.cyk.system.company.ui.web.primefaces.CompanyWebManager;
@@ -24,6 +21,8 @@ import org.cyk.ui.web.api.security.shiro.WebEnvironmentAdapter.SecuredUrlProvide
 import org.cyk.ui.web.primefaces.AbstractPrimefacesManager;
 import org.cyk.utility.common.annotation.Deployment;
 import org.cyk.utility.common.annotation.Deployment.InitialisationType;
+
+import lombok.Getter;
 
 @Singleton @Deployment(initialisationType=InitialisationType.EAGER,order=RicciEpsiloneWebManager.DEPLOYMENT_ORDER) @Getter
 public class RicciEpsiloneWebManager extends AbstractPrimefacesManager implements Serializable {
@@ -63,9 +62,9 @@ public class RicciEpsiloneWebManager extends AbstractPrimefacesManager implement
 	@Override
 	public SystemMenu systemMenu(AbstractUserSession userSession) {
 		SystemMenu systemMenu = new SystemMenu();
-		//if(userSession.hasRole(RootBusinessLayer.getInstance().getManagerRole().getCode())){
+		if(userSession.hasRole(RootBusinessLayer.getInstance().getManagerRole().getCode())){
 			addBusinessMenu(systemMenu,companyWebManager.humanResourcesManagerCommandables(userSession,systemMenu.getMobileBusinesses())); 
-		//}
+		}
 		addBusinessMenu(systemMenu,companyWebManager.customerManagerCommandables(userSession,systemMenu.getMobileBusinesses())); 
 		
 		Cashier cashier = null;
@@ -82,18 +81,49 @@ public class RicciEpsiloneWebManager extends AbstractPrimefacesManager implement
 	}
 	
 	public void saleCommandables(AbstractUserSession userSession,Collection<UICommandable> commandables,Collection<UICommandable> mobileCommandables,Cashier cashier){
+		if(userSession.hasRole(RootBusinessLayer.getInstance().getManagerRole().getCode())){
+			managerSaleCommandables(userSession, commandables, mobileCommandables);
+		}else if(userSession.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleCashierCode())){
+			cashierSaleCommandables(userSession, commandables, mobileCommandables);
+		}else if(userSession.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode())){
+			finaliserSaleCommandables(userSession, commandables, mobileCommandables);
+		}else if(userSession.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleInputterCode())){
+			inputterSaleCommandables(userSession, commandables, mobileCommandables);
+		}
+	}
+	
+	public void inputterSaleCommandables(AbstractUserSession userSession,Collection<UICommandable> commandables,Collection<UICommandable> mobileCommandables){
+		commandables.add(uiProvider.createCommandable("ui.listregisteredsalestockinput.command.label", null, "listregisteredsalestockinput"));
+	}
+	
+	public void finaliserSaleCommandables(AbstractUserSession userSession,Collection<UICommandable> commandables,Collection<UICommandable> mobileCommandables){
+		commandables.add(uiProvider.createCommandable("ui.listregisteredsalestockinput.command.label", null, "listregisteredsalestockinput"));
+		commandables.add(uiProvider.createCommandable("ui.listcloturedsalestockinput.command.label", null, "listcloturedsalestockinput"));
+		saleReportCommandables(userSession, commandables, mobileCommandables);
+	}
+	
+	public void cashierSaleCommandables(AbstractUserSession userSession,Collection<UICommandable> commandables,Collection<UICommandable> mobileCommandables){
+		commandables.add(uiProvider.createCommandable("ui.listcloturedsalestockinput.command.label", null, "listcloturedsalestockinput"));
+		saleReportCommandables(userSession, commandables, mobileCommandables);
+	}
+	
+	public void managerSaleCommandables(AbstractUserSession userSession,Collection<UICommandable> commandables,Collection<UICommandable> mobileCommandables){
+		commandables.add(uiProvider.createCommandable("ui.listregisteredsalestockinput.command.label", null, "listregisteredsalestockinput"));
+		commandables.add(uiProvider.createCommandable("ui.listcloturedsalestockinput.command.label", null, "listcloturedsalestockinput"));
+		saleReportCommandables(userSession, commandables, mobileCommandables);
+	}
+	
+	public void saleReportCommandables(AbstractUserSession userSession,Collection<UICommandable> commandables,Collection<UICommandable> mobileCommandables){
 		CompanyReportRepository companyReportRepository = CompanyReportRepository.getInstance();
 		CompanyWebManager companyWebManager = CompanyWebManager.getInstance();
 		UICommandable c;
 		
-		if(userSession.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleInputterCode())){
-			commandables.add(uiProvider.createCommandable("ui.listregisteredsalestockinput.command.label", null, "listregisteredsalestockinput"));
-			
+		if(roleManager.isManager(null) || userSession.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleCashierCode())){
+			commandables.add(c = uiProvider.createCommandable("company.report.salestockoutput.cashregister.title", null, companyWebManager.getOutcomeSaleStockOutputList()));
+			c.addParameter(companyReportRepository.getParameterSaleStockReportType(), companyReportRepository.getParameterSaleStockReportCashRegister());
 		}
 		
-		if(userSession.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode())){
-			commandables.add(uiProvider.createCommandable("ui.listcloturedsalestockinput.command.label", null, "listcloturedsalestockinput"));
-			
+		if(roleManager.isManager(null) || userSession.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode())){
 			commandables.add(c = uiProvider.createCommandable("company.report.salestock.inventory.title", null, companyWebManager.getOutcomeSaleStockList()));
 			c.addParameter(companyReportRepository.getParameterSaleStockReportType(), companyReportRepository.getParameterSaleStockReportInventory());
 			
@@ -101,24 +131,7 @@ public class RicciEpsiloneWebManager extends AbstractPrimefacesManager implement
 			c.addParameter(companyReportRepository.getParameterSaleStockReportType(), companyReportRepository.getParameterSaleStockReportCustomer());
 		}
 		
-		if(userSession.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleCashierCode())){
-			commandables.add(c = uiProvider.createCommandable("company.report.salestockoutput.cashregister.title", null, companyWebManager.getOutcomeSaleStockOutputList()));
-			c.addParameter(companyReportRepository.getParameterSaleStockReportType(), companyReportRepository.getParameterSaleStockReportCashRegister());
-		}
 		
-		
-		
-		if(userSession.hasRole(RootBusinessLayer.getInstance().getManagerRole().getCode())){
-			//companyWebManager.saleStockReportCommandables(userSession, commandables, mobileCommandables);
-			
-			
-		}
-		
-		if(userSession.hasRole(CompanyBusinessLayer.getInstance().getRoleSaleManagerCode())){
-			/*if(cashier!=null){
-				commandables.add(uiProvider.createCommandable("ricciepsilone.command.register.salestockinput", null, "registersalestockinput"));
-			}*/
-		}
 	}
 	
 }
