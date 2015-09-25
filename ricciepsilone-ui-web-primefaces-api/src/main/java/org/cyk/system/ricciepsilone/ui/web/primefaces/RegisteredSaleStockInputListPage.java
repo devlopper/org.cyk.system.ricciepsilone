@@ -12,6 +12,7 @@ import lombok.Setter;
 import org.cyk.system.company.business.impl.product.SaleStockReportTableRow;
 import org.cyk.system.company.model.product.SaleStockInputSearchCriteria;
 import org.cyk.system.company.ui.web.primefaces.page.product.AbstractSaleStockInputListPage;
+import org.cyk.system.ricciepsilone.business.impl.RicciEpsiloneBusinessLayer;
 import org.cyk.system.root.model.AbstractIdentifiable;
 import org.cyk.ui.api.command.CommandAdapter;
 import org.cyk.ui.api.command.UICommand;
@@ -30,6 +31,7 @@ public class RegisteredSaleStockInputListPage extends AbstractSaleStockInputList
 	protected void initialisation() {
 		super.initialisation();
 		contentTitle = text("ui.listregisteredsalestockinput.page.title");
+		
 		table.getOpenRowCommandable().getCommand().getCommandListeners().add(new CommandAdapter(){
 			private static final long serialVersionUID = 1120566504648934547L;
 			@SuppressWarnings("unchecked")
@@ -53,12 +55,15 @@ public class RegisteredSaleStockInputListPage extends AbstractSaleStockInputList
 		table.getAddRowCommandable().setViewId("registersalestockinput");
 		table.getPrintCommandable().setRendered(Boolean.FALSE);
 		((Commandable)table.getPrintCommandable()).getButton().setRendered(Boolean.FALSE);
+		table.setShowHeader(Boolean.FALSE);
 	}
 	
 	@Override
 	protected void afterInitialisation() {
 		super.afterInitialisation();
 		table.getAddRowCommandable().setViewId("registersalestockinput");
+		table.setShowToolBar(!roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode()));
+		
 	}
 	
 	@Override

@@ -15,12 +15,13 @@ import org.cyk.system.company.ui.web.primefaces.page.product.AbstractSaleStockIn
 import org.cyk.system.ricciepsilone.business.impl.RicciEpsiloneBusinessLayer;
 import org.cyk.system.root.business.api.Crud;
 import org.cyk.system.root.ui.web.primefaces.api.RootWebManager;
+import org.cyk.ui.api.command.menu.UIMenu;
 import org.cyk.ui.web.primefaces.AbstractContextListener;
+import org.cyk.ui.web.primefaces.page.AbstractPrimefacesPage;
 import org.cyk.ui.web.primefaces.page.PrimefacesPageAdapter;
 import org.cyk.ui.web.primefaces.page.application.ApplicationInstallationFormModel;
 import org.cyk.ui.web.primefaces.page.application.ApplicationInstallationPage;
 import org.cyk.ui.web.primefaces.page.application.ApplicationInstallationPage.ApplicationInstallListener;
-import org.cyk.utility.common.cdi.AbstractBean;
 
 @WebListener
 public class ContextListener extends AbstractContextListener implements Serializable {
@@ -73,14 +74,18 @@ public class ContextListener extends AbstractContextListener implements Serializ
 		
 		primefacesManager.getPageListeners().add(new PrimefacesPageAdapter(){
 			private static final long serialVersionUID = 8872343935947587912L;
+			
 			@Override
-			public void initialisationEnded(AbstractBean bean) {
+			public void processContextualMenu(AbstractPrimefacesPage bean,UIMenu contextualMenu) {
+				super.processContextualMenu(bean, contextualMenu);
 				if(bean instanceof AbstractSaleStockInputConsultPage){
-					AbstractSaleStockInputConsultPage page = (AbstractSaleStockInputConsultPage) bean;
-					page.setCanWithdraw(roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleCashierCode()));
+					if(!roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleCashierCode())){
+						contextualMenu.remove(AbstractSaleStockInputConsultPage.COMMANDABLE_WITHDRAW_IDENTIFIER);
+					}
 				}
-				super.initialisationEnded(bean);
 			}
+			
+			
 		});
 	}
 	

@@ -23,7 +23,9 @@ public class ConsultSaleStockInputPage extends AbstractSaleStockInputConsultPage
 	@Override
 	protected Collection<UICommandable> contextualCommandables() {
 		Collection<UICommandable> commandables = new ArrayList<UICommandable>(super.contextualCommandables());
-		if(Boolean.FALSE.equals(identifiable.getSale().getDone()) && Boolean.TRUE.equals(roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode()))){
+		if(Boolean.FALSE.equals(identifiable.getSale().getDone())
+				&& Boolean.TRUE.equals(roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode()))
+				&& !Boolean.TRUE.equals(roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleCashierCode()))){
 			UICommandable commandable = UIProvider.getInstance().createCommandable("ricciepsilone.command.cloture.salestockinput", null,"cloturesalestockinput");
 			commandable.addParameter(uiManager.getIdentifiableParameter(), identifiable.getIdentifier());
 			commandable.addParameter(webManager.getRequestParameterPreviousUrl(), url);
