@@ -117,10 +117,11 @@ public class ContextListener extends AbstractContextListener implements Serializ
 	@Override
 	public void sessionContextualMenuCreated(AbstractUserSession userSession,UIMenu menu) {
 		super.sessionContextualMenuCreated(userSession, menu);
-		if( !Boolean.TRUE.equals(roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode())) ){
+		System.out.println(userSession.getUserAccount().getRoles());
+		//if( !Boolean.TRUE.equals(roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode())) ){
 			menu.remove(MenuManager.COMMANDABLE_EVENT_CALENDAR_IDENTIFIER);
 			menu.remove(MenuManager.COMMANDABLE_NOTIFICATIONS_IDENTIFIER);
-		}
+		//}
 	}
 	
 }
