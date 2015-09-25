@@ -1,6 +1,7 @@
 package org.cyk.system.ricciepsilone.ui.web.primefaces;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.annotation.WebListener;
@@ -15,7 +16,12 @@ import org.cyk.system.company.ui.web.primefaces.page.product.AbstractSaleStockIn
 import org.cyk.system.ricciepsilone.business.impl.RicciEpsiloneBusinessLayer;
 import org.cyk.system.root.business.api.Crud;
 import org.cyk.system.root.ui.web.primefaces.api.RootWebManager;
+import org.cyk.ui.api.AbstractUserSession;
+import org.cyk.ui.api.command.UICommandable;
+import org.cyk.ui.api.command.menu.AbstractMenu;
+import org.cyk.ui.api.command.menu.MenuManager;
 import org.cyk.ui.api.command.menu.UIMenu;
+import org.cyk.ui.api.command.menu.MenuManager.ModuleGroup;
 import org.cyk.ui.web.primefaces.AbstractContextListener;
 import org.cyk.ui.web.primefaces.page.AbstractPrimefacesPage;
 import org.cyk.ui.web.primefaces.page.PrimefacesPageAdapter;
@@ -97,6 +103,22 @@ public class ContextListener extends AbstractContextListener implements Serializ
 		uiManager.registerApplicationUImanager(RicciEpsiloneWebManager.getInstance());
 	}
 	
+	@Override
+	public void moduleGroupCreated(AbstractUserSession userSession,ModuleGroup group, UICommandable commandable) {
+		super.moduleGroupCreated(userSession, group, commandable);
+		if(ModuleGroup.USER_ACCOUNT.equals(group)){
+			AbstractMenu.__remove__(MenuManager.COMMANDABLE_NOTIFICATIONS_IDENTIFIER, (List<UICommandable>) commandable.getChildren());
+			AbstractMenu.__remove__(MenuManager.COMMANDABLE_USER_ACCOUNT_IDENTIFIER, (List<UICommandable>) commandable.getChildren());
+		}
+	}
 	
+	@Override
+	public void sessionContextualMenuCreated(AbstractUserSession userSession,UIMenu menu) {
+		super.sessionContextualMenuCreated(userSession, menu);
+		if( !Boolean.TRUE.equals(roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode())) ){
+			menu.remove(MenuManager.COMMANDABLE_EVENT_CALENDAR_IDENTIFIER);
+			menu.remove(MenuManager.COMMANDABLE_NOTIFICATIONS_IDENTIFIER);
+		}
+	}
 	
 }
