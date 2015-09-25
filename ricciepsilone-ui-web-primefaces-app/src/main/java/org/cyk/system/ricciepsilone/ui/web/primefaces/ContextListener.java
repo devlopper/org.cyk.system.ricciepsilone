@@ -107,6 +107,8 @@ public class ContextListener extends AbstractContextListener implements Serializ
 	public void moduleGroupCreated(AbstractUserSession userSession,ModuleGroup group, UICommandable commandable) {
 		super.moduleGroupCreated(userSession, group, commandable);
 		if(ModuleGroup.USER_ACCOUNT.equals(group)){
+			for(UICommandable commandable2 : commandable.getChildren())
+				debug(commandable2);
 			AbstractMenu.__remove__(MenuManager.COMMANDABLE_NOTIFICATIONS_IDENTIFIER, (List<UICommandable>) commandable.getChildren());
 			AbstractMenu.__remove__(MenuManager.COMMANDABLE_USER_ACCOUNT_IDENTIFIER, (List<UICommandable>) commandable.getChildren());
 		}
