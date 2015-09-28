@@ -62,6 +62,8 @@ public class ContextListener extends AbstractContextListener implements Serializ
 		addReportUrl(roleCode,Sale.class,Boolean.FALSE);
 		
 		roleCode = RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode();
+		addUrl(roleCode,"/private/__tools__/event/agenda.jsf");
+		addUrl(roleCode,"/private/__tools__/event/notifications.jsf");
 		addUrl(roleCode,"/private/__role__/__finaliser__/");
 		addUrl(roleCode,"/private/__role__/__inputter__/listregisteredsalestockinput.jsf");
 		addUrl(roleCode,"/private/__role__/__inputter__/consultsalestockinput.jsf");
@@ -73,7 +75,6 @@ public class ContextListener extends AbstractContextListener implements Serializ
 		
 		roleCode = RicciEpsiloneBusinessLayer.getInstance().getRoleCashierCode();
 		addUrl(roleCode,"/private/__role__/__salemanager__/salestockoutputedit.jsf");
-		//addReportUrl(roleCode,SaleStock.class,saleStockReportType,companyReportRepository.getParameterSaleStockReportCashRegister());
 		addTableUrl(roleCode,SaleStock.class,"/private/__role__/__salemanager__/salestockoutputlist.jsf",saleStockReportType,companyReportRepository.getParameterSaleStockReportCashRegister());
 		addReportUrl(roleCode,Sale.class,Boolean.FALSE);
 		addReportUrl(roleCode,SaleCashRegisterMovement.class,Boolean.FALSE);
@@ -107,9 +108,9 @@ public class ContextListener extends AbstractContextListener implements Serializ
 	public void moduleGroupCreated(AbstractUserSession userSession,ModuleGroup group, UICommandable commandable) {
 		super.moduleGroupCreated(userSession, group, commandable);
 		if(ModuleGroup.USER_ACCOUNT.equals(group)){
-			for(UICommandable commandable2 : commandable.getChildren())
-				debug(commandable2);
-			AbstractMenu.__remove__(MenuManager.COMMANDABLE_NOTIFICATIONS_IDENTIFIER, (List<UICommandable>) commandable.getChildren());
+			if( !Boolean.TRUE.equals(roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode())) ){
+				AbstractMenu.__remove__(MenuManager.COMMANDABLE_NOTIFICATIONS_IDENTIFIER, (List<UICommandable>) commandable.getChildren());
+			}
 			AbstractMenu.__remove__(MenuManager.COMMANDABLE_USER_ACCOUNT_IDENTIFIER, (List<UICommandable>) commandable.getChildren());
 		}
 	}
@@ -118,10 +119,10 @@ public class ContextListener extends AbstractContextListener implements Serializ
 	public void sessionContextualMenuCreated(AbstractUserSession userSession,UIMenu menu) {
 		super.sessionContextualMenuCreated(userSession, menu);
 		System.out.println(userSession.getUserAccount().getRoles());
-		//if( !Boolean.TRUE.equals(roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode())) ){
+		if( !Boolean.TRUE.equals(roleManager.hasRole(RicciEpsiloneBusinessLayer.getInstance().getRoleFinaliserCode())) ){
 			menu.remove(MenuManager.COMMANDABLE_EVENT_CALENDAR_IDENTIFIER);
 			menu.remove(MenuManager.COMMANDABLE_NOTIFICATIONS_IDENTIFIER);
-		//}
+		}
 	}
 	
 }
