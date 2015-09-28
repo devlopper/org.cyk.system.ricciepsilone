@@ -20,14 +20,11 @@ import org.cyk.ui.api.AbstractUserSession;
 import org.cyk.ui.api.command.UICommandable;
 import org.cyk.ui.api.command.menu.AbstractMenu;
 import org.cyk.ui.api.command.menu.MenuManager;
-import org.cyk.ui.api.command.menu.UIMenu;
 import org.cyk.ui.api.command.menu.MenuManager.ModuleGroup;
+import org.cyk.ui.api.command.menu.UIMenu;
 import org.cyk.ui.web.primefaces.AbstractContextListener;
 import org.cyk.ui.web.primefaces.page.AbstractPrimefacesPage;
 import org.cyk.ui.web.primefaces.page.PrimefacesPageAdapter;
-import org.cyk.ui.web.primefaces.page.application.ApplicationInstallationFormModel;
-import org.cyk.ui.web.primefaces.page.application.ApplicationInstallationPage;
-import org.cyk.ui.web.primefaces.page.application.ApplicationInstallationPage.ApplicationInstallListener;
 
 @WebListener
 public class ContextListener extends AbstractContextListener implements Serializable {
@@ -37,13 +34,6 @@ public class ContextListener extends AbstractContextListener implements Serializ
 	@Override
 	protected void initialisation() {
 		super.initialisation();
-		ApplicationInstallationPage.LISTENERS.add(new ApplicationInstallListener() {
-			
-			@Override
-			public void install(ApplicationInstallationFormModel formModel) {
-				
-			}
-		});
 		SaleStockReportTableRow.FIELD_IDENTIFIER_VISIBLE = Boolean.FALSE;
 	}
 	
@@ -52,8 +42,8 @@ public class ContextListener extends AbstractContextListener implements Serializ
 		super.addUrls(event);
 		CompanyReportRepository companyReportRepository = CompanyReportRepository.getInstance();
 		String saleStockReportType = companyReportRepository.getParameterSaleStockReportType();
-		uniformResourceLocatorBusiness.setFilteringEnabled(Boolean.TRUE);
-		addUrl(rootBusinessLayer.getUserRole().getCode(),"/private/index.jsf");
+		//uniformResourceLocatorBusiness.setFilteringEnabled(Boolean.TRUE);
+		//addUrl(rootBusinessLayer.getUserRole().getCode(),"/private/index.jsf");
 		
 		String roleCode = RicciEpsiloneBusinessLayer.getInstance().getRoleInputterCode();
 		addUrl(roleCode,"/private/__role__/__inputter__/");
